@@ -4,7 +4,8 @@ library(ggplot2)
 
 # Define UI
 ui <- dashboardPage(
-  dashboardHeader(title = "Crayfish Decision Support Tool 0.0.1"),
+  dashboardHeader(title = "Crayfish Decision Support Tool 0.0.1",
+                  titleWidth = 400),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"))
@@ -43,25 +44,29 @@ ui <- dashboardPage(
         width = 8,
         fluidRow(
           column(4,
-                 h4("Site Criteria"),
+                 h4("Site A"),
                  numericInput("a_path", "Pathogens:", value = 1, min = 0, max = 5),
                  numericInput("a_metals","Metals", value = 1, min = 0, max = 5),
                  numericInput("a_dens", "Abundance/Density", value = 0, min = 1, max = 10),
                  numericInput("a_therm", "Temperature", value = 1, min = 0, max = 5),
                  numericInput("a_sub", "Substrate", value = 1, min = 0, max = 5)
-           )#,
-          # column(4,
-          #        h4("Location Option B"),
-          #        numericInput("b_env", "Environmental Score:", value = 6, min = 1, max = 10),
-          #        numericInput("b_econ", "Economic Score:", value = 9, min = 1, max = 10),
-          #        numericInput("b_acc", "Accessibility Score:", value = 4, min = 1, max = 10)
-          # ),
-          # column(4,
-          #        h4("Location Option C"),
-          #        numericInput("c_env", "Environmental Score:", value = 4, min = 1, max = 10),
-          #        numericInput("c_econ", "Economic Score:", value = 6, min = 1, max = 10),
-          #        numericInput("c_acc", "Accessibility Score:", value = 9, min = 1, max = 10)
-          # )
+           ),
+          column(4,
+                 h4("Site B"),
+                 numericInput("a_path", "Pathogens:", value = 1, min = 0, max = 5),
+                 numericInput("a_metals","Metals", value = 1, min = 0, max = 5),
+                 numericInput("a_dens", "Abundance/Density", value = 0, min = 1, max = 10),
+                 numericInput("a_therm", "Temperature", value = 1, min = 0, max = 5),
+                 numericInput("a_sub", "Substrate", value = 1, min = 0, max = 5)
+          ),
+          column(4,
+                 h4("Site C"),
+                 numericInput("a_path", "Pathogens:", value = 1, min = 0, max = 5),
+                 numericInput("a_metals","Metals", value = 1, min = 0, max = 5),
+                 numericInput("a_dens", "Abundance/Density", value = 0, min = 1, max = 10),
+                 numericInput("a_therm", "Temperature", value = 1, min = 0, max = 5),
+                 numericInput("a_sub", "Substrate", value = 1, min = 0, max = 5)
+          )
         )
       )
     ),
@@ -110,14 +115,16 @@ server <- function(input, output) {
     # Calculate totals
     score_a <- ((input$a_path*input$m_bold*input$m_right) * wpath) + ((input$a_metals*input$m_bold*input$m_right) * wmetal) + (input$a_therm * wtherm)+
       (input$a_sub * wsub)
-    # score_b <- (input$b_env * we) + (input$b_econ * w_ec) + (input$b_acc * wa)
-    # score_c <- (input$c_env * we) + (input$c_econ * w_ec) + (input$c_acc * wa)
+     score_b <- ((input$a_path*input$m_bold*input$m_right) * wpath) + ((input$a_metals*input$m_bold*input$m_right) * wmetal) + (input$a_therm * wtherm)+
+       (input$a_sub * wsub)
+     score_c <- ((input$a_path*input$m_bold*input$m_right) * wpath) + ((input$a_metals*input$m_bold*input$m_right) * wmetal) + (input$a_therm * wtherm)+
+       (input$a_sub * wsub)
     
     # Structure data frame for plotting
     data.frame(
-      Option = c("Site Score"#, "Location B", "Location C"
+      Option = c("Site Score A", "Site Score B", "Site Score C"
                  ),
-      WeightedScore = c(score_a#, score_b, score_c
+      WeightedScore = c(score_a, score_b, score_c
                         )
     )
   })
