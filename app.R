@@ -53,19 +53,19 @@ ui <- dashboardPage(
            ),
           column(4,
                  h4("Site B"),
-                 numericInput("a_path", "Pathogens:", value = 1, min = 0, max = 5),
-                 numericInput("a_metals","Metals", value = 1, min = 0, max = 5),
-                 numericInput("a_dens", "Abundance/Density", value = 0, min = 1, max = 10),
-                 numericInput("a_therm", "Temperature", value = 1, min = 0, max = 5),
-                 numericInput("a_sub", "Substrate", value = 1, min = 0, max = 5)
+                 numericInput("b_path", "Pathogens:", value = 1, min = 0, max = 5),
+                 numericInput("b_metals","Metals", value = 1, min = 0, max = 5),
+                 numericInput("b_dens", "Abundance/Density", value = 0, min = 1, max = 10),
+                 numericInput("b_therm", "Temperature", value = 1, min = 0, max = 5),
+                 numericInput("b_sub", "Substrate", value = 1, min = 0, max = 5)
           ),
           column(4,
                  h4("Site C"),
-                 numericInput("a_path", "Pathogens:", value = 1, min = 0, max = 5),
-                 numericInput("a_metals","Metals", value = 1, min = 0, max = 5),
-                 numericInput("a_dens", "Abundance/Density", value = 0, min = 1, max = 10),
-                 numericInput("a_therm", "Temperature", value = 1, min = 0, max = 5),
-                 numericInput("a_sub", "Substrate", value = 1, min = 0, max = 5)
+                 numericInput("c_path", "Pathogens:", value = 1, min = 0, max = 5),
+                 numericInput("c_metals","Metals", value = 1, min = 0, max = 5),
+                 numericInput("c_dens", "Abundance/Density", value = 0, min = 1, max = 10),
+                 numericInput("c_therm", "Temperature", value = 1, min = 0, max = 5),
+                 numericInput("c_sub", "Substrate", value = 1, min = 0, max = 5)
           )
         )
       )
@@ -114,11 +114,11 @@ server <- function(input, output) {
     
     # Calculate totals
     score_a <- ((input$a_path*input$m_bold*input$m_right) * wpath) + ((input$a_metals*input$m_bold*input$m_right) * wmetal) + (input$a_therm * wtherm)+
-      (input$a_sub * wsub)
-     score_b <- ((input$a_path*input$m_bold*input$m_right) * wpath) + ((input$a_metals*input$m_bold*input$m_right) * wmetal) + (input$a_therm * wtherm)+
-       (input$a_sub * wsub)
-     score_c <- ((input$a_path*input$m_bold*input$m_right) * wpath) + ((input$a_metals*input$m_bold*input$m_right) * wmetal) + (input$a_therm * wtherm)+
-       (input$a_sub * wsub)
+      (input$a_sub * wsub)+(input$a_dens *wdens)
+     score_b <- ((input$b_path*input$m_bold*input$m_right) * wpath) + ((input$b_metals*input$m_bold*input$m_right) * wmetal) + (input$b_therm * wtherm)+
+       (input$b_sub * wsub)+(input$b_dens *wdens)
+     score_c <- ((input$c_path*input$m_bold*input$m_right) * wpath) + ((input$c_metals*input$m_bold*input$m_right) * wmetal) + (input$c_therm * wtherm)+
+       (input$c_sub * wsub)+(input$c_dens *wdens)
     
     # Structure data frame for plotting
     data.frame(
